@@ -1,17 +1,14 @@
 import s from "./VoteStats.module.css";
-import Notification from "../Notification/Notification";
+import { Votes } from "../../types/votes";
 
 interface VoteStatsProps {
+  votes: Votes;
   totalVotes: number;
-  votes: { good: number; neutral: number; bad: number };
+  positiveRate: string;
 }
 
-const VoteStats = ({ votes, totalVotes }: VoteStatsProps) => {
-  const positiveRate = totalVotes
-    ? Math.round((votes.good / totalVotes) * 100)
-    : 0;
-
-  return totalVotes > 0 ? (
+const VoteStats = ({ votes, totalVotes, positiveRate }: VoteStatsProps) => {
+  return (
     <div className={s.container}>
       <p className={s.stat}>
         Good: <strong>{votes.good}</strong>
@@ -26,11 +23,9 @@ const VoteStats = ({ votes, totalVotes }: VoteStatsProps) => {
         Total: <strong>{totalVotes}</strong>
       </p>
       <p className={s.stat}>
-        Positive: <strong>{positiveRate}%</strong>
+        Positive: <strong>{positiveRate}</strong>
       </p>
     </div>
-  ) : (
-    <Notification />
   );
 };
 

@@ -1,38 +1,28 @@
 import s from "./VoteOptions.module.css";
-
 import { VoteType } from "../../types/votes";
 
 interface VoteOptionsProps {
-  handleVote: (type: VoteType) => void;
-  resetVotes: () => void;
-  totalVotes: number;
+  onVote: (type: VoteType) => void;
+  onReset: () => void;
+  canReset: boolean;
 }
 
-const VoteOptions = ({
-  handleVote,
-  resetVotes,
-  totalVotes,
-}: VoteOptionsProps) => {
+const VoteOptions = ({ onVote, onReset, canReset }: VoteOptionsProps) => {
   return (
     <div className={s.container}>
-      <button className={s.button} onClick={() => handleVote("good")}>
+      <button className={s.button} onClick={() => onVote("good")}>
         Good
       </button>
-      <button className={s.button} onClick={() => handleVote("neutral")}>
+      <button className={s.button} onClick={() => onVote("neutral")}>
         Neutral
       </button>
-      <button className={s.button} onClick={() => handleVote("bad")}>
+      <button className={s.button} onClick={() => onVote("bad")}>
         Bad
       </button>
-      {totalVotes > 0 ? (
-        <button
-          className={`${s.button} ${s.reset}`}
-          onClick={() => resetVotes()}
-        >
+      {canReset && (
+        <button className={`${s.button} ${s.reset}`} onClick={onReset}>
           Reset
         </button>
-      ) : (
-        false
       )}
     </div>
   );
